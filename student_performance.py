@@ -87,10 +87,10 @@ elif choice == 2:
     physics_average = data["Physics"].mean()
     chemistry_average = data["Chemistry"].mean()
     print(
-    "Subject averages:",
-    "Maths", format(maths_average, ".2f") + ",",
-    "Physics", format(physics_average, ".2f") + ",",
-    "Chemistry", format(chemistry_average, ".2f")
+        "Subject averages:",
+        "Maths", format(maths_average, ".2f") + ",",
+        "Physics", format(physics_average, ".2f") + ",",
+        "Chemistry", format(chemistry_average, ".2f")
     )
     # Bar Chart
     subjects = ["Maths", "Physics", "Chemistry"]
