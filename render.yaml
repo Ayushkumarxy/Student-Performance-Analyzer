@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: student-performance-analyzer-code-overview
+    runtime: static
+    buildCommand: echo "Static HTML - no build required"
+    staticPublishPath: .
+    autoDeployTrigger: commit
