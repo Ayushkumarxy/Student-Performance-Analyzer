@@ -160,6 +160,12 @@ The actual program displays this analysis as a Matplotlib bar chart and also ope
 
 This project demonstrates practical use of **CSV data handling, Pandas DataFrames, NumPy statistics, loops, conditional statements, data validation and Matplotlib visualization** in one beginner-friendly Python application.
 
+## 🚀 Live Web App
+
+Run the Python-based Student Performance Analyzer directly in your browser. Upload a CSV file or use the included sample dataset to view student results, class statistics and charts.
+
+👉 **[Open Student Performance Analyzer](https://student-performance-analyzer-qil8.onrender.com/)**
+
 ## 🌐 Live Code Walkthrough
 
 Don't know Python yet? Open the visual walkthrough to understand the actual code block by block in simple language.
