@@ -132,8 +132,8 @@ elif choice == 2:
 
     print(
     "Subject averages:",
-    "Maths", format(maths_average, ".2f"),
-    "Physics", format(physics_average, ".2f"),
+    "Maths", format(maths_average, ".2f") + ",",
+    "Physics", format(physics_average, ".2f") + ",",
     "Chemistry", format(chemistry_average, ".2f")
 )
 
