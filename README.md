@@ -160,6 +160,12 @@ The actual program displays this analysis as a Matplotlib bar chart and also ope
 
 This project demonstrates practical use of **CSV data handling, Pandas DataFrames, NumPy statistics, loops, conditional statements, data validation and Matplotlib visualization** in one beginner-friendly Python application.
 
+## 🌐 Live Code Walkthrough
+
+Don't know Python yet? Open the visual walkthrough to understand the actual code block by block in simple language.
+
+👉 **[Open Live Code Walkthrough](https://student-performance-analyzer-code-walkthrough-itpxxi.v2.appdeploy.ai/)**
+
 ## 🖥️ Project Presentation
 
 A presentation has been prepared to explain the project workflow, structure, dataset, Python concepts, testing, learning outcomes and future scope.
