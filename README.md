@@ -160,6 +160,12 @@ The actual program displays this analysis as a Matplotlib bar chart and also ope
 
 This project demonstrates practical use of **CSV data handling, Pandas DataFrames, NumPy statistics, loops, conditional statements, data validation and Matplotlib visualization** in one beginner-friendly Python application.
 
+## 🖥️ Project Presentation
+
+A presentation has been prepared to explain the project workflow, structure, dataset, Python concepts, testing, learning outcomes and future scope.
+
+👉 **[View Student Performance Analyzer Presentation](https://canva.link/6hglkznhn3euvbe)**
+
 ---
 [![Student Performance Analyzer: Python Data Insights](https://repoclip.io/api/badge/07b1f6fa-f88c-4852-b09f-f5d1314948fb)](https://repoclip.io/v/07b1f6fa-f88c-4852-b09f-f5d1314948fb)
 
