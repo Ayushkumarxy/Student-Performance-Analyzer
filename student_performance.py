@@ -153,9 +153,8 @@ elif choice == 2:
     plt.title("Subject-wise Average")
 
     plt.show()
-
-
     # Histogram
+    plt.figure()
     plt.hist(data["Percentage"])
 
     plt.xlabel("Percentage")
