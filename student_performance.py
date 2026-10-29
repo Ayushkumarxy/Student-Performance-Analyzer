@@ -135,7 +135,7 @@ elif choice == 2:
     "Maths", format(maths_average, ".2f") + ",",
     "Physics", format(physics_average, ".2f") + ",",
     "Chemistry", format(chemistry_average, ".2f")
-)
+    )
 
     # Bar Chart
     subjects = ["Maths", "Physics", "Chemistry"]
