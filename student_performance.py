@@ -145,7 +145,7 @@ elif choice == 2:
         physics_average,
         chemistry_average
     ]
-
+    plt.figure()
     plt.bar(subjects, averages)
 
     plt.xlabel("Subjects")
