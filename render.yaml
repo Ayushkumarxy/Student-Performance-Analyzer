@@ -1,7 +1,8 @@
 services:
   - type: web
-    name: student-performance-analyzer-code-overview
-    runtime: static
-    buildCommand: echo "Static HTML - no build required"
-    staticPublishPath: .
+    name: student-performance-analyzer
+    runtime: python
+    plan: free
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "streamlit run app.py --server.port $PORT --server.address 0.0.0.0"
     autoDeployTrigger: commit
