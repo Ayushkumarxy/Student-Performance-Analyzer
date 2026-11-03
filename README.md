@@ -32,7 +32,8 @@ The program reads student marks from a CSV file, validates the input, calculates
 ```text
 Student-Performance-Analyzer/
 ├── one.py           # Main Python console program
-├── students.csv     # Input dataset
+├── students.csv     # Input dataset used by the program
+├── demo.csv         # Reference sheet for all four test cases
 ├── requirements.txt # Required Python libraries
 └── README.md        # Project documentation
 ```
@@ -105,6 +106,9 @@ The statistics option also displays:
 - A histogram showing the distribution of student percentages.
 
 ## Assignment Test Cases
+
+The complete test-case input rows and expected outputs are also collected in [`demo.csv`](demo.csv). This is a **reference sheet**, not the program input file: copy the rows for one test case into `students.csv` before running the program. For TC4, copy all three TC4 rows together and select option 2.
+
 
 | Test case | Input / scenario | Expected result |
 |---|---|---|
