@@ -1,106 +1,78 @@
 # 🎓 Student Performance Analyzer
 
-A Python-based student performance analysis project that reads marks from a CSV dataset, calculates **total marks, percentages and grades**, generates **class statistics**, identifies the **topper**, and visualizes subject performance using charts.
+A Python 3 console-based project that analyzes student marks using **Pandas, NumPy and Matplotlib**.
 
-> **BCA Python Project — PS No. 100**
+> **BCA Python Project — Problem Statement 100**
 
-## 📌 Project Overview
+## Project Overview
 
-The **Student Performance Analyzer** is designed to make student-result analysis simple and visual. Instead of manually calculating results for every student, the program processes a CSV file and produces both individual results and overall class statistics.
+The program reads student marks from a CSV file, validates the input, calculates results and grades, summarizes class performance, identifies the topper, and displays charts.
 
-### ✨ What it does
+## Features
 
-- 📂 Reads student marks from `students.csv`
-- 🧮 Calculates total marks and percentage
-- 🏅 Assigns grades automatically
-- 📊 Calculates mean, median and standard deviation
-- 🥇 Finds the class topper
-- 📚 Calculates subject-wise averages
-- ⚠️ Detects invalid/non-numeric marks and skips those rows
-- 📈 Displays a subject-average bar chart
-- 📉 Displays a percentage-distribution histogram
+- Reads student records from `students.csv` using Pandas
+- Calculates total marks, percentage and grade
+- Validates non-numeric marks and skips invalid rows
+- Calculates mean, median and population standard deviation
+- Identifies the class topper
+- Calculates subject-wise averages
+- Displays a subject-average bar chart and percentage histogram
 
-## 🛠️ Technologies Used
+## Technologies
 
-| Technology | Purpose |
-| --- | --- |
-| Python 3 | Core programming |
-| Pandas | Reading and processing CSV data |
+| Technology | Use |
+|---|---|
+| Python 3 | Program logic |
+| Pandas | CSV loading and data processing |
 | NumPy | Statistical calculations |
-| Matplotlib | Data visualization |
-| CSV | Student dataset storage |
+| Matplotlib | Charts and visualization |
 
-## 📂 Project Structure
+## Project Files
 
 ```text
 Student-Performance-Analyzer/
-├── student_performance.py   # Main Python program
-├── students.csv             # Student marks dataset
-└── README.md                # Project documentation
+├── one.py           # Main Python console program
+├── students.csv     # Input dataset
+├── requirements.txt # Required Python libraries
+├── testcases.pdf    # Assignment test cases and expected results
+└── README.md        # Project documentation
 ```
 
-## 📥 Dataset
+## Dataset
 
-The included `students.csv` contains:
+The sample `students.csv` contains the following columns. Each subject is marked out of 100.
 
 | Name | Maths | Physics | Chemistry |
-| --- | ---: | ---: | ---: |
+|---|---:|---:|---:|
 | Aman | 80 | 70 | 90 |
 | Riya | 60 | 65 | 70 |
 | Karan | 40 | 35 | 50 |
 
-## 🧠 How the Program Works
-
-```text
-students.csv
-     │
-     ▼
-Read data with Pandas
-     │
-     ▼
-Validate marks ── Invalid value? ──► Skip row
-     │
-     ▼
-Calculate Total + Percentage
-     │
-     ▼
-Assign Grade
-     │
-     ├───────────────┐
-     ▼               ▼
-Student Results   Class Statistics
-                 │
-                 ├─ Mean / Median / Std Dev
-                 ├─ Topper
-                 ├─ Subject averages
-                 └─ Charts
-```
-
-## 🏷️ Grading System
+## Grading Rules
 
 | Percentage | Grade |
-| ---: | :---: |
-| ≥ 90% | A |
-| ≥ 75% | B |
-| ≥ 60% | C |
-| ≥ 40% | D |
-| < 40% | F |
+|---:|:---:|
+| 90 or above | A |
+| 75 to below 90 | B |
+| 60 to below 75 | C |
+| 40 to below 60 | D |
+| Below 40 | F |
 
-## ▶️ Running the Project
+## Installation and Execution
 
-Install the required libraries:
-
-```bash
-pip install pandas numpy matplotlib
-```
-
-Then run:
+Install dependencies:
 
 ```bash
-python student_performance.py
+pip install -r requirements.txt
 ```
 
-The program provides two options:
+Run the console program from the project folder:
+
+```bash
+python one.py
+```
+
+Choose an option when prompted:
 
 ```text
 STUDENT PERFORMANCE ANALYZER
@@ -109,9 +81,7 @@ STUDENT PERFORMANCE ANALYZER
 Enter option:
 ```
 
-## 🧾 Sample Result
-
-Choosing **Option 1** with the included dataset produces:
+## Sample Output — Option 1
 
 ```text
 Student Results
@@ -120,9 +90,7 @@ Riya | 195 | 65.00% | C
 Karan | 125 | 41.67% | D
 ```
 
-## 📊 Class Statistics
-
-Choosing **Option 2** calculates:
+## Sample Output — Option 2
 
 ```text
 Class Statistics
@@ -130,59 +98,31 @@ Mean %: 62.22
 Median %: 65.00
 Std Dev: 15.77
 Topper: Aman (80.00%)
-Subject averages: Maths 60.00 Physics 56.67 Chemistry 70.00
+Subject averages: Maths 60.00, Physics 56.67, Chemistry 70.00
 ```
 
-### 📈 Subject-wise Average
+The statistics option also displays:
+- A bar chart of average marks in Maths, Physics and Chemistry.
+- A histogram showing the distribution of student percentages.
 
-The program generates a bar chart using these values:
+## Assignment Test Cases
 
-```text
-Maths       60.00  ██████████████████████████████
-Physics     56.67  ████████████████████████████
-Chemistry   70.00  ███████████████████████████████████
-```
+| Test case | Input / scenario | Expected result |
+|---|---|---|
+| TC1 — Normal | Aman (80,70,90), Riya (60,65,70), Karan (40,35,50); option 1 | The three sample results shown above |
+| TC2 — Boundary | Neha (100,100,100), Ravi (0,0,0); option 1 | Neha: 300, 100.00%, A; Ravi: 0, 0.00%, F |
+| TC3 — Invalid data | Amit (85,abc,70) | `Invalid marks for Amit in Physics: 'abc'. Row skipped.` |
+| TC4 — Statistics | TC1 dataset; option 2 | Mean 62.22, median 65.00, standard deviation 15.77, Aman topper, subject averages 60.00 / 56.67 / 70.00 and both charts |
 
-**Chemistry** has the highest class average in the sample dataset, followed by **Maths** and **Physics**.
+For each test, replace the rows in `students.csv` with the test input, save the file, and run `python one.py`. Restore the sample dataset after testing.
 
-The actual program displays this analysis as a Matplotlib bar chart and also opens a histogram showing the distribution of student percentages.
+**Standard deviation note:** The expected value 15.77 uses population standard deviation, matching NumPy's default `np.std()`.
 
-## 🧪 Assignment Test Cases
+## Learning Outcomes
 
-| Test | Scenario | Expected behaviour |
-| --- | --- | --- |
-| 1 | Normal input | Calculates Aman, Riya and Karan results |
-| 2 | Boundary input | Handles 100% → A and 0% → F |
-| 3 | Invalid input | Non-numeric marks such as `abc` are detected and the row is skipped |
-| 4 | Statistics | Displays mean, median, standard deviation, topper, subject averages and chart |
+This project demonstrates CSV handling, Pandas DataFrames, NumPy statistical functions, conditional statements, loops, input validation and Matplotlib data visualization.
 
-## 🎯 Learning Outcomes
+## Author
 
-This project demonstrates practical use of **CSV data handling, Pandas DataFrames, NumPy statistics, loops, conditional statements, data validation and Matplotlib visualization** in one beginner-friendly Python application.
-
-## 🚀 Live Web App
-
-Run the Python-based Student Performance Analyzer directly in your browser. Upload a CSV file or use the included sample dataset to view student results, class statistics and charts.
-
-👉 **[Open Student Performance Analyzer](https://student-performance-analyzer-qil8.onrender.com/)**
-
-## 🌐 Live Code Walkthrough
-
-Don't know Python yet? Open the visual walkthrough to understand the actual code block by block in simple language.
-
-👉 **[Open Live Code Walkthrough](https://student-performance-analyzer-code-walkthrough-itpxxi.v2.appdeploy.ai/)**
-
-## 🖥️ Project Presentation
-
-A presentation has been prepared to explain the project workflow, structure, dataset, Python concepts, testing, learning outcomes and future scope.
-
-👉 **[View Student Performance Analyzer Presentation](https://canva.link/6hglkznhn3euvbe)**
-
----
-[![Student Performance Analyzer: Python Data Insights](https://repoclip.io/api/badge/07b1f6fa-f88c-4852-b09f-f5d1314948fb)](https://repoclip.io/v/07b1f6fa-f88c-4852-b09f-f5d1314948fb)
-
-### 👨‍💻 Author
-
-**Ayush Kumar**
-
-Built as a BCA Python project to practice data analysis and visualization with Python.
+**Ayush Kumar**  
+BCA (AI & ML)
