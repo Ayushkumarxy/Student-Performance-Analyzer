@@ -1,99 +1,96 @@
-# 🎓 Student Performance Analyzer
+# Student Performance Analyzer
 
-A Python 3 console-based project that analyzes student marks using **Pandas, NumPy and Matplotlib**.
+A Python-based student result and class performance analysis project developed for **BCA — Problem Statement 100** at Rungta International Skills University, School of Information Technology.
 
-> **BCA Python Project — Problem Statement 100**
+The project processes marks in **Maths, Physics and Chemistry** from a CSV dataset. It calculates each student's total, percentage and grade, then provides class-level statistics and visualizations.
 
-## Project Overview
+## Project Highlights
 
-The program reads student marks from a CSV file, validates the input, calculates results and grades, summarizes class performance, identifies the topper, and displays charts.
+- Import and process student records from a CSV file with Pandas.
+- Calculate total marks, percentage and grades for each student.
+- Validate marks and skip rows containing invalid values.
+- Calculate class mean, median and population standard deviation.
+- Identify the class topper and calculate subject-wise averages.
+- Visualize subject averages with a bar chart and percentage distribution with a histogram.
 
-## Features
+## Built With
 
-- Reads student records from `students.csv` using Pandas
-- Calculates total marks, percentage and grade
-- Validates non-numeric marks and skips invalid rows
-- Calculates mean, median and population standard deviation
-- Identifies the class topper
-- Calculates subject-wise averages
-- Displays a subject-average bar chart and percentage histogram
-
-## Technologies
-
-| Technology | Use |
+| Technology | Purpose |
 |---|---|
-| Python 3 | Program logic |
-| Pandas | CSV loading and data processing |
+| Python 3 | Core program and calculations |
+| Pandas | Reading and processing CSV data |
 | NumPy | Statistical calculations |
-| Matplotlib | Charts and visualization |
+| Matplotlib | Data visualization |
 
-## Project Files
+## Repository Structure
 
 ```text
 Student-Performance-Analyzer/
-├── one.py           # Main Python console program
-├── students.csv     # Input dataset used by the program
-├── demo.csv         # Simple sample data for assignment test cases
-├── requirements.txt # Required Python libraries
-└── README.md        # Project documentation
+├── one.py
+├── students.csv
+├── demo.csv
+├── testcases.pdf
+├── requirements.txt
+└── README.md
 ```
 
-## Dataset
+## Input Dataset
 
-Both CSV files use the same simple format. Each subject is marked out of 100.
+The input file uses this format. Each subject is marked out of 100.
 
-| Name | Maths | Physics | Chemistry |
-|---|---:|---:|---:|
-| Aman | 80 | 70 | 90 |
-| Riya | 60 | 65 | 70 |
-| Karan | 40 | 35 | 50 |
+```csv
+Name,Maths,Physics,Chemistry
+Aman,80,70,90
+Riya,60,65,70
+Karan,40,35,50
+```
 
-## Grading Rules
+## Grading Criteria
 
 | Percentage | Grade |
 |---:|:---:|
-| 90 or above | A |
+| 90 and above | A |
 | 75 to below 90 | B |
 | 60 to below 75 | C |
 | 40 to below 60 | D |
 | Below 40 | F |
 
-## Installation and Execution
+## Setup and Run
 
-Install dependencies:
+1. Clone or download this repository.
+2. Open a terminal in the project folder.
+3. Install the required libraries:
 
-```bash
-pip install -r requirements.txt
-```
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-Run the console program from the project folder:
+4. Run the program:
 
-```bash
-python one.py
-```
+   ```bash
+   python one.py
+   ```
 
-Choose an option when prompted:
+5. Select the required menu option:
+
+   ```text
+   1. Result
+   2. Statistics
+   ```
+
+## Sample Results
+
+### Option 1 — Student Results
 
 ```text
-STUDENT PERFORMANCE ANALYZER
-1. Result
-2. Statistics
-Enter option:
-```
-
-## Sample Output — Option 1
-
-```text
-Student Results
 Aman | 240 | 80.00% | B
 Riya | 195 | 65.00% | C
 Karan | 125 | 41.67% | D
 ```
 
-## Sample Output — Option 2
+### Option 2 — Class Statistics
 
 ```text
-Class Statistics
 Mean %: 62.22
 Median %: 65.00
 Std Dev: 15.77
@@ -101,37 +98,31 @@ Topper: Aman (80.00%)
 Subject averages: Maths 60.00, Physics 56.67, Chemistry 70.00
 ```
 
-The statistics option also displays:
-- A bar chart of average marks in Maths, Physics and Chemistry.
-- A histogram showing the distribution of student percentages.
+The statistics option also displays a subject-average bar chart and a percentage histogram.
 
-## Assignment Test Cases
+## Test Cases
 
-`demo.csv` contains all test data in the same simple format as `students.csv`. Copy only the required rows into `students.csv` before running each test:
+The repository includes `demo.csv` with test data in the same format as `students.csv`, plus `testcases.pdf` with the expected results.
 
-| Test case | Rows to copy from demo.csv | Select |
+| Test case | Dataset | Menu option |
 |---|---|---|
-| TC1 — Normal | Aman, Riya and Karan (first 3 student rows) | Option 1 |
-| TC2 — Boundary | Neha and Ravi (next 2 student rows) | Option 1 |
-| TC3 — Invalid data | Amit (last student row) | Option 1 |
-| TC4 — Statistics | Aman, Riya and Karan (first 3 student rows) | Option 2 |
+| TC1 — Normal input | Aman, Riya, Karan | 1 — Result |
+| TC2 — Boundary input | Neha, Ravi | 1 — Result |
+| TC3 — Invalid input | Amit (Physics: abc) | 1 — Result |
+| TC4 — Statistics | Aman, Riya, Karan | 2 — Statistics |
 
-Expected results:
+To run a test, copy its student rows from `demo.csv` into `students.csv`, save the file and run the program. Restore the original sample data after testing.
 
-- **TC1:** Aman — 240, 80.00%, B; Riya — 195, 65.00%, C; Karan — 125, 41.67%, D.
-- **TC2:** Neha — 300, 100.00%, A; Ravi — 0, 0.00%, F.
-- **TC3:** `Invalid marks for Amit in Physics: 'abc'. Row skipped.`
-- **TC4:** Mean 62.22, median 65.00, standard deviation 15.77, Aman topper, subject averages 60.00 / 56.67 / 70.00, and both charts.
-
-After testing, restore the original sample data in `students.csv`.
-
-**Standard deviation note:** The expected value 15.77 uses population standard deviation, matching NumPy's default `np.std()`.
+**Statistics note:** The expected standard deviation (15.77) is the population standard deviation, consistent with NumPy's default `np.std()`.
 
 ## Learning Outcomes
 
-This project demonstrates CSV handling, Pandas DataFrames, NumPy statistical functions, conditional statements, loops, input validation and Matplotlib data visualization.
+This project applies Python programming, CSV file handling, Pandas DataFrames, NumPy statistics, input validation, conditional logic, and Matplotlib visualization to a practical academic use case.
 
-## Author
+## Project Information
 
-**Ayush Kumar**  
-BCA (AI & ML)
+- **Project:** Student Performance Analyzer
+- **Problem Statement:** 100
+- **Course:** BCA (AI & ML)
+- **Institution:** Rungta International Skills University — School of Information Technology
+- **Author:** Ayush Kumar
