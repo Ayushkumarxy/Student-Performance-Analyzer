@@ -34,7 +34,6 @@ Student-Performance-Analyzer/
 ├── one.py           # Main Python console program
 ├── students.csv     # Input dataset
 ├── requirements.txt # Required Python libraries
-├── testcases.pdf    # Assignment test cases and expected results
 └── README.md        # Project documentation
 ```
 
