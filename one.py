@@ -3,7 +3,24 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # Read CSV file
-data = pd.read_csv("students.csv")
+try:
+    data = pd.read_csv("students.csv")
+except FileNotFoundError:
+    print("Error: students.csv file not found.")
+    raise SystemExit
+except pd.errors.EmptyDataError:
+    print("Error: students.csv is empty.")
+    raise SystemExit
+
+# Check required columns
+subjects = ["Maths", "Physics", "Chemistry"]
+required_columns = ["Name"] + subjects
+
+missing_columns = [column for column in required_columns if column not in data.columns]
+
+if missing_columns:
+    print("Error: Missing required column(s):", ", ".join(missing_columns))
+    raise SystemExit
 
 # Check invalid marks
 invalid_rows = []
@@ -11,35 +28,36 @@ invalid_rows = []
 for i in data.index:
     name = data.loc[i, "Name"]
 
-    maths = pd.to_numeric(data.loc[i, "Maths"], errors="coerce")
-    physics = pd.to_numeric(data.loc[i, "Physics"], errors="coerce")
-    chemistry = pd.to_numeric(data.loc[i, "Chemistry"], errors="coerce")
+    for subject in subjects:
+        raw_mark = data.loc[i, subject]
+        mark = pd.to_numeric(raw_mark, errors="coerce")
 
-    if pd.isna(maths):
-        print("Invalid marks for", name, "in Maths:",
-              "'" + str(data.loc[i, "Maths"]) + "'. Row skipped.")
-        invalid_rows.append(i)
+        if pd.isna(mark):
+            print(
+                "Invalid marks for", name, "in", subject + ":",
+                "'" + str(raw_mark) + "'. Row skipped."
+            )
+            invalid_rows.append(i)
+            break
 
-    elif pd.isna(physics):
-        print("Invalid marks for", name, "in Physics:",
-              "'" + str(data.loc[i, "Physics"]) + "'. Row skipped.")
-        invalid_rows.append(i)
-
-    elif pd.isna(chemistry):
-        print("Invalid marks for", name, "in Chemistry:",
-              "'" + str(data.loc[i, "Chemistry"]) + "'. Row skipped.")
-        invalid_rows.append(i)
+        elif mark < 0 or mark > 100:
+            print(
+                "Invalid marks for", name, "in", subject + ":",
+                "'" + str(raw_mark) + "'. Marks must be between 0 and 100. Row skipped."
+            )
+            invalid_rows.append(i)
+            break
 
 # Convert marks into numbers
-data["Maths"] = pd.to_numeric(data["Maths"], errors="coerce")
-data["Physics"] = pd.to_numeric(data["Physics"], errors="coerce")
-data["Chemistry"] = pd.to_numeric(data["Chemistry"], errors="coerce")
+for subject in subjects:
+    data[subject] = pd.to_numeric(data[subject], errors="coerce")
 
 # Remove invalid rows
 data = data.drop(index=invalid_rows)
 
-# Test Case 3 ends after reporting invalid input
+# Stop if no valid student records remain
 if len(data) == 0:
+    print("No valid student records found.")
     raise SystemExit
 
 # Calculate Total
@@ -70,17 +88,21 @@ print("\nSTUDENT PERFORMANCE ANALYZER")
 print("1. Result")
 print("2. Statistics")
 
-choice = int(input("Enter option: "))
+choice = input("Enter option: ").strip()
+
+while choice not in ["1", "2"]:
+    print("Invalid option. Please enter 1 or 2.")
+    choice = input("Enter option: ").strip()
 
 # Option 1 - Result
-if choice == 1:
+if choice == "1":
     print("\nStudent Results")
 
     for i in data.index:
         print(
             data.loc[i, "Name"],
             "|",
-            int(data.loc[i, "Total"]),
+            format(data.loc[i, "Total"], "g"),
             "|",
             format(data.loc[i, "Percentage"], ".2f") + "%",
             "|",
@@ -88,7 +110,7 @@ if choice == 1:
         )
 
 # Option 2 - Statistics
-elif choice == 2:
+elif choice == "2":
     mean = np.mean(data["Percentage"])
     median = np.median(data["Percentage"])
     std = np.std(data["Percentage"])
@@ -139,6 +161,3 @@ elif choice == 2:
     plt.ylabel("Number of Students")
     plt.title("Percentage Distribution")
     plt.show()
-
-else:
-    print("Invalid option")
