@@ -1,0 +1,10 @@
+Test Case,Scenario,Name,Maths,Physics,Chemistry,Menu Option,Expected Output
+TC1,Normal input,Aman,80,70,90,1,"Aman | 240 | 80.00% | B"
+TC1,Normal input,Riya,60,65,70,1,"Riya | 195 | 65.00% | C"
+TC1,Normal input,Karan,40,35,50,1,"Karan | 125 | 41.67% | D"
+TC2,Boundary input,Neha,100,100,100,1,"Neha | 300 | 100.00% | A"
+TC2,Boundary input,Ravi,0,0,0,1,"Ravi | 0 | 0.00% | F"
+TC3,Invalid input,Amit,85,abc,70,1,"Invalid marks for Amit in Physics: 'abc'. Row skipped."
+TC4,Statistics,Aman,80,70,90,2,"Mean %: 62.22; Median %: 65.00; Std Dev: 15.77; Topper: Aman (80.00%); Subject averages: Maths 60.00, Physics 56.67, Chemistry 70.00; Bar chart and histogram displayed."
+TC4,Statistics,Riya,60,65,70,2,"Use the complete TC4 dataset together with the other two TC4 rows."
+TC4,Statistics,Karan,40,35,50,2,"Use the complete TC4 dataset together with the other two TC4 rows."
