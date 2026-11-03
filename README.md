@@ -18,7 +18,10 @@ Explore the project through a visual, beginner-friendly walkthrough. It explains
 
 - Reads student records from `students.csv` using Pandas
 - Calculates total marks, percentage and grade
-- Validates non-numeric marks and skips invalid rows
+- Rejects non-numeric marks and marks outside the 0–100 range
+- Skips invalid student rows and reports the first invalid subject in each row
+- Checks for missing CSV files and required columns
+- Validates menu input and accepts only options 1 or 2
 - Calculates mean, median and population standard deviation
 - Identifies the class topper
 - Calculates subject-wise averages
@@ -54,6 +57,19 @@ Both CSV files use the same simple format. Each subject is marked out of 100.
 | Riya | 60 | 65 | 70 |
 | Karan | 40 | 35 | 50 |
 
+## Input Validation
+
+Every subject mark must be numeric and between **0 and 100**, inclusive.
+
+| Input | Program behavior |
+|---|---|
+| `abc` or another non-numeric value | Reports the invalid subject and skips that student's row |
+| `-5` | Rejects the row because marks cannot be below 0 |
+| `105` | Rejects the row because marks cannot exceed 100 |
+| Valid marks such as `0`, `75` or `100` | Accepts the row |
+
+The program also checks that `students.csv` exists and contains the required columns: `Name`, `Maths`, `Physics` and `Chemistry`. If no valid student rows remain, it displays a message and exits.
+
 ## Grading Rules
 
 | Percentage | Grade |
@@ -86,6 +102,8 @@ STUDENT PERFORMANCE ANALYZER
 2. Statistics
 Enter option:
 ```
+
+The menu accepts only `1` or `2`. If you enter letters, symbols or another number, it displays an error and asks again instead of crashing.
 
 ## Sample Output — Option 1
 
