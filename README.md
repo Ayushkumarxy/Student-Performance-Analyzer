@@ -33,14 +33,14 @@ The program reads student marks from a CSV file, validates the input, calculates
 Student-Performance-Analyzer/
 ├── one.py           # Main Python console program
 ├── students.csv     # Input dataset used by the program
-├── demo.csv         # Reference sheet for all four test cases
+├── demo.csv         # Simple sample data for assignment test cases
 ├── requirements.txt # Required Python libraries
 └── README.md        # Project documentation
 ```
 
 ## Dataset
 
-The sample `students.csv` contains the following columns. Each subject is marked out of 100.
+Both CSV files use the same simple format. Each subject is marked out of 100.
 
 | Name | Maths | Physics | Chemistry |
 |---|---:|---:|---:|
@@ -107,17 +107,23 @@ The statistics option also displays:
 
 ## Assignment Test Cases
 
-The complete test-case input rows and expected outputs are also collected in [`demo.csv`](demo.csv). This is a **reference sheet**, not the program input file: copy the rows for one test case into `students.csv` before running the program. For TC4, copy all three TC4 rows together and select option 2.
+`demo.csv` contains all test data in the same simple format as `students.csv`. Copy only the required rows into `students.csv` before running each test:
 
-
-| Test case | Input / scenario | Expected result |
+| Test case | Rows to copy from demo.csv | Select |
 |---|---|---|
-| TC1 — Normal | Aman (80,70,90), Riya (60,65,70), Karan (40,35,50); option 1 | The three sample results shown above |
-| TC2 — Boundary | Neha (100,100,100), Ravi (0,0,0); option 1 | Neha: 300, 100.00%, A; Ravi: 0, 0.00%, F |
-| TC3 — Invalid data | Amit (85,abc,70) | `Invalid marks for Amit in Physics: 'abc'. Row skipped.` |
-| TC4 — Statistics | TC1 dataset; option 2 | Mean 62.22, median 65.00, standard deviation 15.77, Aman topper, subject averages 60.00 / 56.67 / 70.00 and both charts |
+| TC1 — Normal | Aman, Riya and Karan (first 3 student rows) | Option 1 |
+| TC2 — Boundary | Neha and Ravi (next 2 student rows) | Option 1 |
+| TC3 — Invalid data | Amit (last student row) | Option 1 |
+| TC4 — Statistics | Aman, Riya and Karan (first 3 student rows) | Option 2 |
 
-For each test, replace the rows in `students.csv` with the test input, save the file, and run `python one.py`. Restore the sample dataset after testing.
+Expected results:
+
+- **TC1:** Aman — 240, 80.00%, B; Riya — 195, 65.00%, C; Karan — 125, 41.67%, D.
+- **TC2:** Neha — 300, 100.00%, A; Ravi — 0, 0.00%, F.
+- **TC3:** `Invalid marks for Amit in Physics: 'abc'. Row skipped.`
+- **TC4:** Mean 62.22, median 65.00, standard deviation 15.77, Aman topper, subject averages 60.00 / 56.67 / 70.00, and both charts.
+
+After testing, restore the original sample data in `students.csv`.
 
 **Standard deviation note:** The expected value 15.77 uses population standard deviation, matching NumPy's default `np.std()`.
 
