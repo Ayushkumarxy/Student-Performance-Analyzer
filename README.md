@@ -31,12 +31,11 @@ The program reads student marks from a CSV file, validates the input, calculates
 
 ```text
 Student-Performance-Analyzer/
-├── one.py           # Main Python console program
-├── students.csv     # Input dataset used by the program
-├── demo.csv         # Simple sample data for assignment test cases
-├── testcases.pdf    # Assignment test cases and expected results
-├── requirements.txt # Required Python libraries
-└── README.md        # Project documentation
+├── one.py        # Main Python console program
+├── students.csv  # Input dataset used by the program
+├── demo.csv      # Sample data for assignment test cases
+├── testcases.pdf # Assignment test cases and expected results
+└── README.md     # Project documentation
 ```
 
 ## Dataset
@@ -61,10 +60,10 @@ Both CSV files use the same simple format. Each subject is marked out of 100.
 
 ## Installation and Execution
 
-Install dependencies:
+Install the required libraries:
 
 ```bash
-pip install -r requirements.txt
+pip install pandas numpy matplotlib
 ```
 
 Run the console program from the project folder:
