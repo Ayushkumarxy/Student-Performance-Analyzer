@@ -8,6 +8,12 @@ A Python 3 console-based project that analyzes student marks using **Pandas, Num
 
 The program reads student marks from a CSV file, validates the input, calculates results and grades, summarizes class performance, identifies the topper, and displays charts.
 
+## Interactive Project Overview
+
+Explore the project through a visual, beginner-friendly walkthrough. It explains the program flow, the current `one.py` code, CSV datasets, grading rules, assignment test cases and expected outputs.
+
+**[Open the Student Performance Analyzer — Project Overview](https://student-performance-analyzer-code-walkthrough-itpxxi.v2.appdeploy.ai/)**
+
 ## Features
 
 - Reads student records from `students.csv` using Pandas
@@ -113,7 +119,7 @@ The statistics option also displays:
 |---|---|---|
 | TC1 — Normal | Aman, Riya and Karan (first 3 student rows) | Option 1 |
 | TC2 — Boundary | Neha and Ravi (next 2 student rows) | Option 1 |
-| TC3 — Invalid data | Amit (last student row) | Option 1 |
+| TC3 — Invalid data | Amit (invalid Physics value) | Option 1 |
 | TC4 — Statistics | Aman, Riya and Karan (first 3 student rows) | Option 2 |
 
 Expected results:
