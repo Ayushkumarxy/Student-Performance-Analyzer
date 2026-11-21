@@ -1,5 +1,4 @@
 """Streamlit web interface for Student Performance Analyzer."""
-from io import BytesIO
 import numpy as np
 import pandas as pd
 import streamlit as st
