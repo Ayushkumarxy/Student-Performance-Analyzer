@@ -1,163 +1,138 @@
+"""Student Performance Analyzer — console edition.
+
+Run: python one.py
+Input: students.csv in the same folder.
+"""
+from pathlib import Path
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-# Read CSV file
-try:
-    data = pd.read_csv("students.csv")
-except FileNotFoundError:
-    print("Error: students.csv file not found.")
-    raise SystemExit
-except pd.errors.EmptyDataError:
-    print("Error: students.csv is empty.")
-    raise SystemExit
+SUBJECTS = ["Maths", "Physics", "Chemistry"]
+REQUIRED_COLUMNS = ["Name", *SUBJECTS]
+DATA_FILE = Path(__file__).with_name("students.csv")
 
-# Check required columns
-subjects = ["Maths", "Physics", "Chemistry"]
-required_columns = ["Name"] + subjects
 
-missing_columns = [column for column in required_columns if column not in data.columns]
+def load_students(file_path=DATA_FILE):
+    """Load the CSV and return only valid student records."""
+    try:
+        data = pd.read_csv(file_path)
+    except FileNotFoundError:
+        print(f"Error: {file_path.name} was not found.")
+        return None
+    except pd.errors.EmptyDataError:
+        print("Error: The CSV file is empty.")
+        return None
+    except pd.errors.ParserError:
+        print("Error: The CSV file format is invalid.")
+        return None
 
-if missing_columns:
-    print("Error: Missing required column(s):", ", ".join(missing_columns))
-    raise SystemExit
+    missing = [col for col in REQUIRED_COLUMNS if col not in data.columns]
+    if missing:
+        print("Error: Missing required column(s): " + ", ".join(missing))
+        return None
 
-# Check invalid marks
-invalid_rows = []
+    data = data[REQUIRED_COLUMNS].copy()
+    data["Name"] = data["Name"].astype("string").str.strip()
+    for subject in SUBJECTS:
+        data[subject] = pd.to_numeric(data[subject], errors="coerce")
 
-for i in data.index:
-    name = data.loc[i, "Name"]
+    valid = data["Name"].notna() & data["Name"].ne("")
+    for subject in SUBJECTS:
+        valid &= data[subject].between(0, 100, inclusive="both")
 
-    for subject in subjects:
-        raw_mark = data.loc[i, subject]
-        mark = pd.to_numeric(raw_mark, errors="coerce")
+    invalid_count = int((~valid).sum())
+    if invalid_count:
+        print(f"Skipped {invalid_count} invalid row(s). Marks must be numeric and between 0 and 100.")
 
-        if pd.isna(mark):
-            print(
-                "Invalid marks for", name, "in", subject + ":",
-                "'" + str(raw_mark) + "'. Row skipped."
-            )
-            invalid_rows.append(i)
-            break
+    data = data.loc[valid].copy()
+    if data.empty:
+        print("No valid student records found.")
+        return None
+    return data.reset_index(drop=True)
 
-        elif mark < 0 or mark > 100:
-            print(
-                "Invalid marks for", name, "in", subject + ":",
-                "'" + str(raw_mark) + "'. Marks must be between 0 and 100. Row skipped."
-            )
-            invalid_rows.append(i)
-            break
 
-# Convert marks into numbers
-for subject in subjects:
-    data[subject] = pd.to_numeric(data[subject], errors="coerce")
+def calculate_results(data):
+    """Add total, percentage and grade columns to a copy of the data."""
+    result = data.copy()
+    result["Total"] = result[SUBJECTS].sum(axis=1)
+    result["Percentage"] = result["Total"] / len(SUBJECTS)
 
-# Remove invalid rows
-data = data.drop(index=invalid_rows)
+    conditions = [
+        result["Percentage"] >= 90,
+        result["Percentage"] >= 75,
+        result["Percentage"] >= 60,
+        result["Percentage"] >= 40,
+    ]
+    result["Grade"] = np.select(conditions, ["A", "B", "C", "D"], default="F")
+    return result
 
-# Stop if no valid student records remain
-if len(data) == 0:
-    print("No valid student records found.")
-    raise SystemExit
 
-# Calculate Total
-data["Total"] = data["Maths"] + data["Physics"] + data["Chemistry"]
+def show_results(data):
+    print("\nSTUDENT RESULTS")
+    print("-" * 64)
+    print(f"{'Name':<18}{'Total':>10}{'Percentage':>16}{'Grade':>10}")
+    print("-" * 64)
+    for row in data.itertuples(index=False):
+        print(f"{row.Name:<18}{row.Total:>10.0f}{row.Percentage:>15.2f}%{row.Grade:>10}")
+    print("-" * 64)
 
-# Calculate Percentage
-data["Percentage"] = data["Total"] / 3
 
-# Calculate Grade
-grades = []
+def show_statistics(data):
+    percentages = data["Percentage"].to_numpy()
+    print("\nCLASS STATISTICS")
+    print(f"Students analysed : {len(data)}")
+    print(f"Mean percentage   : {np.mean(percentages):.2f}%")
+    print(f"Median percentage : {np.median(percentages):.2f}%")
+    print(f"Population std dev: {np.std(percentages):.2f}")
 
-for percentage in data["Percentage"]:
-    if percentage >= 90:
-        grades.append("A")
-    elif percentage >= 75:
-        grades.append("B")
-    elif percentage >= 60:
-        grades.append("C")
-    elif percentage >= 40:
-        grades.append("D")
-    else:
-        grades.append("F")
-
-data["Grade"] = grades
-
-# Menu
-print("\nSTUDENT PERFORMANCE ANALYZER")
-print("1. Result")
-print("2. Statistics")
-
-choice = input("Enter option: ").strip()
-
-while choice not in ["1", "2"]:
-    print("Invalid option. Please enter 1 or 2.")
-    choice = input("Enter option: ").strip()
-
-# Option 1 - Result
-if choice == "1":
-    print("\nStudent Results")
-
-    for i in data.index:
-        print(
-            data.loc[i, "Name"],
-            "|",
-            format(data.loc[i, "Total"], "g"),
-            "|",
-            format(data.loc[i, "Percentage"], ".2f") + "%",
-            "|",
-            data.loc[i, "Grade"]
-        )
-
-# Option 2 - Statistics
-elif choice == "2":
-    mean = np.mean(data["Percentage"])
-    median = np.median(data["Percentage"])
-    std = np.std(data["Percentage"])
-
-    print("\nClass Statistics")
-    print("Mean %:", format(mean, ".2f"))
-    print("Median %:", format(median, ".2f"))
-    print("Std Dev:", format(std, ".2f"))
-
-    # Find Topper
     highest = data["Percentage"].max()
+    toppers = data.loc[data["Percentage"].eq(highest), "Name"].tolist()
+    print(f"Topper(s)         : {', '.join(toppers)} ({highest:.2f}%)")
+    print("\nSUBJECT AVERAGES")
+    for subject in SUBJECTS:
+        print(f"{subject:<12}: {data[subject].mean():.2f}")
 
-    for i in data.index:
-        if data.loc[i, "Percentage"] == highest:
-            print(
-                "Topper:",
-                data.loc[i, "Name"],
-                "(" + format(data.loc[i, "Percentage"], ".2f") + "%)"
-            )
-
-    # Subject Averages
-    maths_average = data["Maths"].mean()
-    physics_average = data["Physics"].mean()
-    chemistry_average = data["Chemistry"].mean()
-
-    print(
-        "Subject averages:",
-        "Maths", format(maths_average, ".2f") + ",",
-        "Physics", format(physics_average, ".2f") + ",",
-        "Chemistry", format(chemistry_average, ".2f")
-    )
-
-    # Bar Chart
-    subjects = ["Maths", "Physics", "Chemistry"]
-    averages = [maths_average, physics_average, chemistry_average]
-
-    plt.figure()
-    plt.bar(subjects, averages)
-    plt.xlabel("Subjects")
-    plt.ylabel("Average Marks")
-    plt.title("Subject-wise Average")
+    plt.figure(figsize=(7, 4))
+    data[SUBJECTS].mean().plot(kind="bar", title="Subject-wise Average Marks",
+                               xlabel="Subject", ylabel="Average marks (out of 100)")
+    plt.ylim(0, 100)
+    plt.tight_layout()
     plt.show()
 
-    # Histogram
-    plt.figure()
-    plt.hist(data["Percentage"])
+    plt.figure(figsize=(7, 4))
+    plt.hist(data["Percentage"], bins=10, edgecolor="black")
+    plt.title("Student Percentage Distribution")
     plt.xlabel("Percentage")
-    plt.ylabel("Number of Students")
-    plt.title("Percentage Distribution")
+    plt.ylabel("Number of students")
+    plt.xlim(0, 100)
+    plt.tight_layout()
     plt.show()
+
+
+def main():
+    students = load_students()
+    if students is None:
+        return
+    results = calculate_results(students)
+
+    while True:
+        print("\nSTUDENT PERFORMANCE ANALYZER")
+        print("1. Student results")
+        print("2. Class statistics and graphs")
+        print("3. Exit")
+        choice = input("Enter option (1-3): ").strip()
+
+        if choice == "1":
+            show_results(results)
+        elif choice == "2":
+            show_statistics(results)
+        elif choice == "3":
+            print("Thank you for using Student Performance Analyzer.")
+            break
+        else:
+            print("Invalid option. Please enter 1, 2 or 3.")
+
+
+if __name__ == "__main__":
+    main()
