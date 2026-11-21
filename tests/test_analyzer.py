@@ -38,11 +38,11 @@ class AnalyzerTests(unittest.TestCase):
 
     def test_invalid_rows_are_removed(self):
         csv_text = (
-            "Name,Maths,Physics,Chemistry\\n"
-            "Valid,80,70,90\\n"
-            "BadText,abc,70,90\\n"
-            "OutOfRange,101,70,90\\n"
-            ",50,50,50\\n"
+            "Name,Maths,Physics,Chemistry\n"
+            "Valid,80,70,90\n"
+            "BadText,abc,70,90\n"
+            "OutOfRange,101,70,90\n"
+            ",50,50,50\n"
         )
         with tempfile.TemporaryDirectory() as folder:
             path = Path(folder) / "students.csv"
